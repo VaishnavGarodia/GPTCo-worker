@@ -4,10 +4,10 @@ import queue
 import uuid
 import logging
 from threading import Lock, Thread
-from services.engine.classes.action_executor import ActionExecutor
-from services.engine.modules.schedule import ScheduleModule
-from services.engine.modules.workflows.convsys_workflow import ConversationSystemWorkflow
-from services.engine.modules.workflows.leads_workflow import LeadsWorkflow
+from classes.action_executor import ActionExecutor
+from modules.schedule import ScheduleModule
+from modules.workflows.convsys_workflow import ConversationSystemWorkflow
+from modules.workflows.leads_workflow import LeadsWorkflow
 
 class ChangeReactor():
     """This defines the ChangeReactor class, which determines the appropriate reactions based on

@@ -128,7 +128,7 @@ class AbilityRegister:
                 ).replace("/", ".")
                 try:
                     module = importlib.import_module(
-                        f".{ability[:-3]}", package="services.engine.abilities"
+                        f".{ability[:-3]}", package="abilities"
                     )
                     for attr in dir(module):
                         func = getattr(module, attr)

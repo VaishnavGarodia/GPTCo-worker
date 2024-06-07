@@ -5,9 +5,9 @@ import pprint
 from concurrent.futures import ThreadPoolExecutor
 from threading import Thread
 import logging
-from services.engine.abilities.registry import AbilityRegister
-from services.engine.modules.llm import chat_completion_request
-from services.engine.modules.prompting import PromptEngine
+from abilities.registry import AbilityRegister
+from modules.llm import chat_completion_request
+from modules.prompting import PromptEngine
 
 
 class ActionExecutor():

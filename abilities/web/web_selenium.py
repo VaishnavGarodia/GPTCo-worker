@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from services.engine.errors import CommandExecutionError
+from errors import CommandExecutionError
 
 from bs4 import BeautifulSoup
 from selenium.common.exceptions import WebDriverException
