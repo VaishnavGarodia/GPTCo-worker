@@ -1,0 +1,4 @@
+{"car_brand":Honda, "return_policy":No, "exceptions_to_policy":Honda Civic}
+{"car_brand":BMW, "return_policy":Yes, "exceptions_to_policy":BMW 228i}
+{"car_brand":Audi, "return_policy":Yes}
+{"car_brand":Mercedes, "return_policy":Yes}

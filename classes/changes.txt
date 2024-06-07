@@ -1,0 +1,3 @@
+{"category":"convsys","data":{"type":"schedule_test_drive", "name":"Max Eunich", "phone_number":"8919812345", "test_drive_date":"June 5th", "test_drive_time":"12:00 PM", "message":"Looking to test drive a Honda Civic"}}
+{"category":"lead","data":{"type":"new_lead", "name":"Max Eunich", "phone_number":"8919812345", "message":"Looking to buy a Honda Civic 2015"}}
+{"category":"convsys","data":{"type":"return_intent", "name":"Max Eunich", "phone_number":"8919812345", "message":"Looking to return Honda Civic 2015"}}

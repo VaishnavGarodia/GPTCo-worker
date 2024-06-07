@@ -1,0 +1,67 @@
+import logging
+import time
+import json
+import os
+import threading
+from queue import Queue, Full, Empty
+from change_reactor import ChangeReactor
+
+class ChangeListener:
+    def __init__(self, file_path, max_workers=10):
+        self.file_path = file_path
+        self.last_position = 0
+        self.change_reactor = ChangeReactor()
+        self.change_queue = Queue()
+        self.max_workers = max_workers
+        self.active_workers = 0
+        self.lock = threading.Lock()
+
+    def process_change(self):
+        while True:
+            try:
+                change = self.change_queue.get(timeout=3)
+                with self.lock:
+                    self.active_workers += 1
+                self.change_reactor.enqueue_change_callback(change)
+                with self.lock:
+                    self.active_workers -= 1
+                self.change_queue.task_done()
+            except Empty:
+                continue
+
+    def watch_file(self):
+        while True:
+            if os.path.exists(self.file_path):
+                with open(self.file_path, 'r') as file:
+                    file.seek(self.last_position)
+                    change_num = 0
+                    while True:
+                        line = file.readline()
+                        if not line:
+                            break
+                        try:
+                            change_num += 1
+                            print(f"Processing change message {change_num}: {line.strip()}")
+                            json_element = json.loads(line.strip())
+                            try:
+                                self.change_queue.put(json_element, timeout=1)
+                            except Full:
+                                print(f"Queue is full, skipping change: {json_element}")
+                        except json.JSONDecodeError:
+                            print(f"Invalid JSON detected: {line.strip()}")
+                    self.last_position = file.tell()
+            else:
+                print(f"File not found: {self.file_path}")
+            time.sleep(3)
+
+if __name__ == "__main__":
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    file_path = os.path.join(script_dir, "changes.txt")
+    listener = ChangeListener(file_path)
+
+    for _ in range(listener.max_workers):
+        worker = threading.Thread(target=listener.process_change)
+        worker.daemon = True
+        worker.start()
+
+    listener.watch_file()
